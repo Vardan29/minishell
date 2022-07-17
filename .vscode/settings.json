@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"linkedlist.h": "c",
+		"minishell.h": "c",
+		"unistd.h": "c",
+		"minishell_structs.h": "c"
+	}
+}

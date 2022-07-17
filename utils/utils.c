@@ -6,7 +6,7 @@
 /*   By: syeghiaz <syeghiaz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:36:59 by syeghiaz          #+#    #+#             */
-/*   Updated: 2022/07/08 19:15:32 by syeghiaz         ###   ########.fr       */
+/*   Updated: 2022/07/16 20:07:50 by syeghiaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	close_fds(int **fds, int i_len)
 	free(fds);
 }
 
-char	**get_env_path(char **envv)
+char	**get_data_path(char **env)
 {
 	int		i;
 	char	**file_path;
@@ -45,11 +45,11 @@ char	**get_env_path(char **envv)
 	i = -1;
 	file_path = NULL;
 	withbackslash = NULL;
-	while (envv[++i])
+	while (env[++i])
 	{
-		if (!ft_strncmp(envv[i], "PATH=", 5))
+		if (!ft_strncmp(env[i], "PATH=", 5))
 		{
-			file_path = ft_split(envv[i] + 5, ':');
+			file_path = ft_split(env[i] + 5, ':');
 			i = -1;
 			while (file_path[++i])
 				;
@@ -65,20 +65,14 @@ char	**get_env_path(char **envv)
 	return (withbackslash);
 }
 
-char	**copy_env_var(char **text)
+void	change_cwd(char *new_pwd)
 {
-	char	**copy;
-	int		line_count;
+	t_node	*old_pwd;
+	t_node	*pwd;
 
-	line_count = -1;
-	if (!text)
-		return (NULL);
-	while (text[++line_count])
-		;
-	copy = malloc(sizeof(char *) * (line_count + 1));
-	line_count = -1;
-	while (text[++line_count])
-		copy[line_count] = ft_strdup(text[line_count]);
-	copy[line_count] = NULL;
-	return (copy);
+	old_pwd = find_node_with_key(g_data->env_list, "OLDPWD");
+	pwd = find_node_with_key(g_data->env_list, "PWD");
+	free(old_pwd->value);
+	old_pwd->value = pwd->value;
+	pwd->value = ft_strdup(new_pwd);
 }

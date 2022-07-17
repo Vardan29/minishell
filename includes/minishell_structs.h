@@ -1,6 +1,5 @@
 #ifndef MINISHELL_STRUCTS_H
-#define MINISHELL_STRUCTS_H
-
+# define MINISHELL_STRUCTS_H
 
 typedef struct s_cmd
 {
@@ -8,7 +7,7 @@ typedef struct s_cmd
 	char	**params;
 }			t_cmd;
 
-typedef struct s_env
+typedef struct s_data
 {
 	int		infile;
 	int		outfile;
@@ -18,6 +17,7 @@ typedef struct s_env
 	int		cmds_count;
 	int		**fds;
 	char	*project_name;
-}			t_env;
+	t_list	*env_list;
+}			t_data;
 
 #endif
